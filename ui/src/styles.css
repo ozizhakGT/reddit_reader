@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+:root {
+  /* COLORS */
+  --primary-color-main: #3f51b5;
+  --primary-color-sub: #566270;
+  --secondery-color-main: #E0E3DA;
+  --secondery-color-sub: #FFFFF3;
+  --third-color-main: #fdfdfd;
+  --third-color-sub: #e3dede;
+}
+
+*,
+*:active,
+*:visited {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  font-family: 'PT Sans', sans-serif;
+  color: currentColor;
+}
+/*GENETAL LAYOUT STYLES*/
+html {
+  background: #fdfdfd;
+  font-size: 62.5%;
+}
+
+.mat-simple-snackbar span {
+  color: var(--third-color-sub);
+  font-size: 2rem;
+}
+.success {
+  background: #04a84f;
+}
+.failed {
+  font-size: 2rem !important;
+  background: #cd3301;
+}

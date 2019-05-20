@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar__header">
+    <img class="navbar__header--logo" src="../../../assets/logo.jpg" alt="reddit logo">
+    <p class="navbar__header--title">REDDIT VIEWER</p>
+  </div>
+
+  <div class="navbar__search">
+    <form (ngSubmit)="searchResults(query.value)" #searchForm="ngForm">
+      <input type="text"
+             placeholder="Search Some Posts ..."
+             #query
+             name="search"
+             required
+             ngModel>
+      <button *ngIf="searchForm.valid" mat-flat-button color="primary" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
