@@ -8,20 +8,19 @@ import {UtilsService} from '../services/utils.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   constructor(private apiService: ApiService, private utilsService: UtilsService) { }
 
-  ngOnInit() {
-  }
-  prapreQuery(query) {
+  ngOnInit() {}
+  private prepareQuery(query) {
     return query = isNaN(query) ? query.replace(/\s/g,'') : false;
   }
   searchResults(query) {
-    if (this.prapreQuery(query)) {
+    if (this.prepareQuery(query)) {
       this.apiService.getPosts(query, 5)
         .subscribe(
           response => {
-            console.log(response);
+            let posts = response['data'].children.map(post => post['data']);
+            this.utilsService.setPosts(posts);
           },
           err => {
             let message: string;

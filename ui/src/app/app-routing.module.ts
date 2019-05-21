@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'search', pathMatch: 'full'}
+  {path: '', redirectTo: 'posts', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
+import {PostsWrapperModule} from './posts-wrapper/posts-wrapper.module';
+import {AppRoutingModule} from './app-routing.module';
 
 // COSTUME MODULES
 import {CoreModule} from './core/core.module';
 
 // COMPONENTS AND SERVICES
 import { AppComponent } from './app.component';
-import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {AppRoutingModule} from './app-routing.module';
     BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    PostsWrapperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
