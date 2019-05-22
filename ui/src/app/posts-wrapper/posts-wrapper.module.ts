@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // COSTUME MODULES
-import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {PostsWrapperRoutingModule} from './posts-wrapper-routing.module';
 import {SharedModule} from '../shared/shared.module';
 

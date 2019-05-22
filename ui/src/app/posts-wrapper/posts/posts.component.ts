@@ -13,9 +13,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   postSubscription: Subscription;
   posts: Post[] = [];
   subReddit: string = sessionStorage.getItem('subReddit');
-  previews        = 0;
-  next            = 5;
-  loader = false;
+  previews = 0;
+  next = 5;
+  loader: boolean = false;
 
   constructor(private utilsService: UtilsService,
               private apiService: ApiService) {
@@ -26,8 +26,9 @@ export class PostsComponent implements OnInit, OnDestroy {
       // RESET PAGINATION OPTIONS ONLY WHEN GETTING NEW QUERY!
       if (posts.length < 10) {
         this.previews = 0;
-        this.next     = 5;
-      };
+        this.next = 5;
+      }
+      ;
 
       // TAKE SUB REDDIT FROM SESSION STORAGE
       this.subReddit = sessionStorage.getItem('subReddit');
@@ -38,10 +39,12 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // SUBSCRIBE LEAK PREVENTION
     this.postSubscription.unsubscribe();
   }
 
   getNextPosts() {
+    // REQUEST THE POSTS ARRAY + 5 INDEXES MORE
     if (this.posts.length === this.next) {
       this.loader = true;
       this.apiService.getPosts(this.subReddit, this.posts.length + 5).toPromise()
@@ -55,7 +58,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             this.loader = false;
             this.utilsService.posts.next(this.posts);
           });
-
+    //  RARE SITUATION THAT HAVE NEXT VARIABLE GREATER THEN POST ARRAY
     } else if (this.next > this.posts.length) {
       this.utilsService.notification('No more Results!', null, 'success');
     } else {
@@ -64,11 +67,13 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
   }
 
+  // GO 5 INDEXES BACK IN POST ARRAY
   onPreviewsBtn() {
     this.previews -= 5;
     this.next -= 5;
   }
 
+  // FORMATTING To Date INSTANCE
   formattingDate(posts) {
     posts.forEach(
       post => {
