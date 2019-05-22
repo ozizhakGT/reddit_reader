@@ -15,7 +15,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   subReddit: string = sessionStorage.getItem('subReddit');
   previews = 0;
   next = 5;
-  loader: boolean = false;
+  loader = false;
 
   constructor(private utilsService: UtilsService,
               private apiService: ApiService) {
