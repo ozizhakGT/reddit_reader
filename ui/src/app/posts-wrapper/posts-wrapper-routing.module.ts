@@ -6,7 +6,6 @@ import {PostsComponent} from './posts/posts.component';
 
 
 const postsRoutes: Routes = [
-  {path: '', redirectTo: 'posts', pathMatch: 'full'},
   {path: 'posts', children: [
       {path: '', component: PostsWrapperComponent},
       {path: ':subReddit', component: PostsComponent}

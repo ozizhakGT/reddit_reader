@@ -17,6 +17,12 @@
   animation: redditAnimation 5s 1s infinite;
 }
 
+.body-page {
+  display: flex;
+  flex-direction: column;
+}
+
+
 @keyframes redditAnimation {
   0%   {transform: translateY(0)}
   5% {transform: translateY(-30px)}

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {Post} from "../interfaces/post.interface";
+import {Post} from '../interfaces/post.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
-  subReddit = new BehaviorSubject<boolean>(false);
   posts = new Subject<Post[]>();
   hasPosts = new BehaviorSubject<boolean>(false);
   constructor(private Notification: MatSnackBar) { }
 
+  // NOTIFICATION ALERTS
   notification(message, action, messagetype) {
     this.Notification.open(message, action, {
       duration: 3500,
@@ -34,14 +34,23 @@ export class UtilsService {
         holder[prop] = post[prop];
       })
       posts[i] = holder;
-    })
-    this.formattingDate(posts);
-    this.posts.next(posts);
+    });
   }
-  formattingDate(posts) {
-    posts.forEach(
-      post => {
-        post['created_utc'] = new Date(post['created_utc'] * 1000)
-      });
+
+
+  /*
+  * SET OBJECT FOR CHART
+  * name  = hours
+  * value = likes
+  * */
+  setChart(data) {
+    let single = [];
+    data.forEach(post => {
+      let obj = {};
+      obj['name']  = new Date(post['created_utc']).getHours();
+      obj['value'] = post['ups'];
+      single.push(obj);
+    });
+    return single;
   }
 }

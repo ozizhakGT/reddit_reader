@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UtilsService} from '../core/services/utils.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-posts-wrapper',
@@ -9,11 +9,15 @@ import {ActivatedRoute, Params} from '@angular/router';
 })
 export class PostsWrapperComponent implements OnInit {
   hasPosts = false;
+  subReddit = sessionStorage.getItem('subReddit');
   constructor(private utilsService: UtilsService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.utilsService.hasPosts.subscribe(hasPost => {
+      debugger;
+      let subReddit = sessionStorage.getItem('subReddit');
       this.hasPosts = hasPost;
     });
   }

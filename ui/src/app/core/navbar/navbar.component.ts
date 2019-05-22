@@ -3,7 +3,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 
 import {ApiService} from '../services/api.service';
 import {UtilsService} from '../services/utils.service';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
+import {query} from "@angular/animations";
 
 @Component({
   selector: 'app-navbar',
@@ -12,32 +13,44 @@ import {NgForm} from "@angular/forms";
 })
 export class NavbarComponent implements OnInit {
   @ViewChild('searchForm') searchForm: NgForm;
+
   constructor(private apiService: ApiService,
               private utilsService: UtilsService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    if (sessionStorage.getItem('subReddit') && (sessionStorage.getItem('subReddit') !== null || sessionStorage.getItem('subReddit') !== undefined)) {
-      this.searchResults(sessionStorage.getItem('subReddit'))
+    // CHECK SESSION STORAGE PARAM VALIDATION
+    const subRedditParam = sessionStorage.getItem('subReddit');
+    if (subRedditParam && (subRedditParam != null || subRedditParam !== 'undefined')) {
+          this.searchResults(sessionStorage.getItem('subReddit'));
+    }
+    else {
+      sessionStorage.removeItem('subReddit');
+      this.router.navigate(['posts'])
     }
   }
+
   private prepareQuery(query) {
+    // CHECK QUERY VALIDATION AND PREPARE IT.
     query = isNaN(query) ? query.replace(/\s/g, '') : false;
     return query;
   }
+
   searchResults(query) {
-    const subRedit = query;
+    const subReddit = query;
     query = this.prepareQuery(query);
-    if (query) {
+    if (query && query !== 'undefined') {
+      // CALL FIRST 5 POSTS;
       this.apiService.getPosts(query, 5)
         .subscribe(
           response => {
+            sessionStorage.setItem('subReddit', subReddit);
             const posts = response['data'].children.map(post => post.data);
-            sessionStorage.setItem('subReddit', subRedit);
             this.utilsService.setPosts(posts);
-            this.utilsService.hasPosts.next(true);
             this.utilsService.posts.next(posts);
+            this.utilsService.hasPosts.next(true);
             this.searchForm.reset();
           },
           err => {
@@ -56,16 +69,15 @@ export class NavbarComponent implements OnInit {
             this.utilsService.hasPosts.next(false);
             sessionStorage.setItem('subReddit', undefined);
             this.utilsService.notification(message, null, 'failed');
-            this.router.navigate(['./']);
+            this.router.navigate(['../../'], {relativeTo: this.route});
           }
         );
     } else {
       this.utilsService.hasPosts.next(false);
-      sessionStorage.setItem('subReddit', undefined);
+      sessionStorage.removeItem('subReddit');
       this.utilsService.notification('Not Valid Query', null, 'failed');
       this.router.navigate(['./']);
-      console.log('not valid');
     }
-    this.router.navigate(['posts', subRedit], {relativeTo: this.route});
+    this.router.navigate(['posts', subReddit], {relativeTo: this.route})
   }
 }

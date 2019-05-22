@@ -6,6 +6,7 @@ import {
   MatMenuModule,
   MatSnackBarModule
 } from '@angular/material';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [],
@@ -15,14 +16,16 @@ import {
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxChartsModule
   ],
   exports: [
     MatMenuModule,
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxChartsModule
   ]
 })
 export class SharedModule { }

@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UtilsService} from '../../core/services/utils.service';
 import {ApiService} from '../../core/services/api.service';
 import {Post} from '../../core/interfaces/post.interface';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
+  postSubscription: Subscription;
   posts: Post[] = [];
   subReddit: string = sessionStorage.getItem('subReddit');
   previews        = 0;
@@ -20,19 +22,29 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.utilsService.posts.subscribe((posts: Post[]) => {
-      // RESET PAGINATION OPTIONS
-      this.previews = 0;
-      this.next     = 5;
+    debugger
+    this.postSubscription = this.utilsService.posts.subscribe((posts: Post[]) => {
+      // RESET PAGINATION OPTIONS ONLY WHEN GETTING NEW QUERY!
+      if (posts.length < 10) {
+        debugger
+        this.previews = 0;
+        this.next     = 5;
+      };
 
       // TAKE SUB REDDIT FROM SESSION STORAGE
       this.subReddit = sessionStorage.getItem('subReddit');
       this.posts = posts;
+      this.utilsService.setPosts(this.posts);
+      this.formattingDate(this.posts);
     });
   }
 
-  getPosts() {
+  ngOnDestroy() {
+    debugger
+    this.postSubscription.unsubscribe();
+  }
+
+  getNextPosts() {
     if (this.posts.length === this.next) {
       this.loader = true;
       this.apiService.getPosts(this.subReddit, this.posts.length + 5).toPromise()
@@ -42,7 +54,9 @@ export class PostsComponent implements OnInit {
             this.utilsService.setPosts(this.posts);
             this.previews += 5;
             this.next += 5;
+            this.formattingDate(this.posts);
             this.loader = false;
+            this.utilsService.posts.next(this.posts);
           });
 
     } else if (this.next > this.posts.length) {
@@ -57,6 +71,14 @@ export class PostsComponent implements OnInit {
   onPreviewsBtn() {
     this.previews -= 5;
     this.next -= 5;
+    console.log(this.previews, this.next)
+  }
+
+  formattingDate(posts) {
+    posts.forEach(
+      post => {
+        post['created_utc'] = new Date(post['created_utc'] * 1000)
+      });
   }
 
 }
