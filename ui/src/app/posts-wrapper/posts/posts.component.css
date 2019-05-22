@@ -1,0 +1,62 @@
+mat-card {
+  background-color: #eeebe9;
+  width: 60%;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  min-height:  52rem;
+  position: relative;
+  animation: fadeIn .7s;
+}
+mat-card-title {
+  margin: 3rem 0;
+}
+mat-accordion {
+  animation: fadeIn .8s;
+}
+mat-panel-title {
+  align-items: center;
+}
+mat-panel-title img {
+  width: 6rem;
+  height: 4rem;
+  margin-right: 5rem;
+}
+mat-panel-description {
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 2rem;
+  color: green;
+}
+.item-body {
+  font-size: 1.5rem;
+}
+.item-body *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.item-body a {
+  margin-right: .4rem;
+  font-size: 1.7rem;
+  transition: all .6s;
+}
+.item-body a:hover {
+  margin-right: 1rem;
+  color: var(--primary-color-main);
+}
+.actions {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}
+.next-btn {
+  margin-left: 3rem;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.6rem;
+  animation: fadeIn .6s;
+}

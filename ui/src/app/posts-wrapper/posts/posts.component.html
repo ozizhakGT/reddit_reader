@@ -1,0 +1,31 @@
+<mat-card *ngIf="subReddit">
+  <mat-card-title>{{subReddit}} Posts!</mat-card-title>
+  <mat-accordion *ngIf="!loader; else showLoader">
+    <mat-expansion-panel *ngFor="let post of posts | slice: previews:next">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <img src="{{post.thumbnail}}" onerror="this.src ='../../../assets/home.png'" alt="thumbnail">
+          <h3>{{post.title}}</h3>
+        </mat-panel-title>
+        <mat-panel-description>
+          <span>{{post.ups}}</span> <i class="fa fa-thumbs-o-up w3-text-indigo"></i>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="item-body">
+        <p><b>Author:</b> {{post.author}}</p>
+        <p><b>Released on:</b> {{post.created_utc | date: 'MMM/dd/yy HH:mm'}}</p>
+        <a href="{{post.url}}">Redirect to Post</a> <span>&#8594;</span>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <ng-template #showLoader>
+    <div class="loader">
+      <img src="../../../assets/loading.gif" alt="loader" width="150" height="150">
+      <p>Loading ...</p>
+    </div>
+  </ng-template>
+  <div class="actions">
+    <button *ngIf="previews > 0" type="button" mat-raised-button color='warn' (click)="onPreviewsBtn()">Previews Page</button>
+    <button *ngIf="next !== 100" [disabled]="loader || next > posts.length" class="next-btn" type="button" mat-raised-button color='primary' (click)="getPosts()">Next Page</button>
+  </div>
+</mat-card>
