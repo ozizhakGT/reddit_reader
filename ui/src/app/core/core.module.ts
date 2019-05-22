@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
 // COSTUME MODULES
 import {SharedModule} from '../shared/shared.module';
@@ -19,7 +20,8 @@ import {NavbarComponent} from './navbar/navbar.component';
     CommonModule,
     HttpClientModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [NavbarComponent]
 })

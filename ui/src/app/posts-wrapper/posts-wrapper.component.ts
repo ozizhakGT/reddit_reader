@@ -16,7 +16,6 @@ export class PostsWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.utilsService.hasPosts.subscribe(hasPost => {
-      debugger;
       let subReddit = sessionStorage.getItem('subReddit');
       this.hasPosts = hasPost;
     });

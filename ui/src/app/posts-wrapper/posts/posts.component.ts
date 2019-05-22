@@ -22,11 +22,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    debugger
     this.postSubscription = this.utilsService.posts.subscribe((posts: Post[]) => {
       // RESET PAGINATION OPTIONS ONLY WHEN GETTING NEW QUERY!
       if (posts.length < 10) {
-        debugger
         this.previews = 0;
         this.next     = 5;
       };
@@ -40,7 +38,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    debugger
     this.postSubscription.unsubscribe();
   }
 
@@ -60,7 +57,6 @@ export class PostsComponent implements OnInit, OnDestroy {
           });
 
     } else if (this.next > this.posts.length) {
-      debugger;
       this.utilsService.notification('No more Results!', null, 'success');
     } else {
       this.previews += 5;
@@ -71,7 +67,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   onPreviewsBtn() {
     this.previews -= 5;
     this.next -= 5;
-    console.log(this.previews, this.next)
   }
 
   formattingDate(posts) {

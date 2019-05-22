@@ -1,17 +1,16 @@
 .general-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-evenly;
 }
 mat-card {
   background-color: #eeebe9;
-  width: 60%;
-  margin: 4rem auto;
+  margin: 4rem 0;
   display: flex;
   flex-direction: column;
+  width: 80rem;
   min-height:  52rem;
   position: relative;
-  animation: fadeIn .7s;
+  animation: fadeIn 1.2s;
 }
 mat-card-title {
   margin: 3rem 0;

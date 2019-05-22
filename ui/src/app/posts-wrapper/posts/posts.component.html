@@ -1,5 +1,5 @@
-<div class="general-wrapper">
-  <mat-card *ngIf="subReddit">
+<div *ngIf="subReddit" class="general-wrapper">
+  <mat-card>
     <mat-card-title>{{subReddit}} Posts!</mat-card-title>
     <mat-accordion *ngIf="!loader; else showLoader">
       <mat-expansion-panel *ngFor="let post of posts | slice: previews:next">
@@ -30,6 +30,6 @@
       <button *ngIf="next !== 100" [disabled]="loader || next > posts.length" class="next-btn" type="button" mat-raised-button color='primary' (click)="getNextPosts()">Next Page</button>
     </div>
   </mat-card>
-  <app-chart></app-chart>
+  <mat-card><app-chart></app-chart></mat-card>
 
 </div>
