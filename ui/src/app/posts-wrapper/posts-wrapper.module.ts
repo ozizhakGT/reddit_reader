@@ -10,7 +10,7 @@ import {SharedModule} from '../shared/shared.module';
 import {PostsWrapperComponent} from './posts-wrapper.component';
 import { PostsComponent } from './posts/posts.component';
 import {CoreModule} from '../core/core.module';
-import {ChartComponent} from './chart/chart.component';
+import {ChartComponent} from './posts/chart/chart.component';
 
 @NgModule({
   declarations: [

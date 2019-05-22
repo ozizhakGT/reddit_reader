@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {UtilsService} from "../../core/services/utils.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {UtilsService} from '../../../core/services/utils.service';
+import {Subscription} from 'rxjs';
+import {Post} from "../../../core/interfaces/post.interface";
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
+  
+  chartSubscription: Subscription;
+  
   single: number[] = [];
   view: any[] = [700, 400];
   showXAxis = true;
@@ -23,14 +28,14 @@ export class ChartComponent implements OnInit {
   constructor(private utilsService: UtilsService) { }
 
   ngOnInit() {
-    this.utilsService.posts.subscribe(
+    this.utilsService.chartHasChanged.subscribe(
       posts => {
         this.single = this.utilsService.setChart(posts);
         // SORT BY HOUR
         this.single.sort((a, b) => {
-          if (a['name'] > b['name']) {
+          if (a.name > b.name) {
             return 1;
-          } else if (a['name'] < b['name']) {
+          } else if (a.name < b.name) {
             return -1;
           } else {
             return 0;
@@ -38,6 +43,9 @@ export class ChartComponent implements OnInit {
         });
       }
     );
+  }
+  ngOnDestroy() {
+    this.chartSubscription.unsubscribe();
   }
 
 }

@@ -28,13 +28,10 @@ export class PostsComponent implements OnInit, OnDestroy {
         this.previews = 0;
         this.next = 5;
       }
-      ;
-
       // TAKE SUB REDDIT FROM SESSION STORAGE
       this.subReddit = sessionStorage.getItem('subReddit');
       this.posts = posts;
       this.utilsService.setPosts(this.posts);
-      this.formattingDate(this.posts);
     });
   }
 
@@ -43,7 +40,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.postSubscription.unsubscribe();
   }
 
-  getNextPosts() {
+  async getNextPosts() {
     // REQUEST THE POSTS ARRAY + 5 INDEXES MORE
     if (this.posts.length === this.next) {
       this.loader = true;
@@ -51,12 +48,10 @@ export class PostsComponent implements OnInit, OnDestroy {
         .then(
           posts => {
             this.posts = posts['data'].children.map(post => post.data);
-            this.utilsService.setPosts(this.posts);
             this.previews += 5;
             this.next += 5;
-            this.formattingDate(this.posts);
+            this.utilsService.setPosts(this.posts);
             this.loader = false;
-            this.utilsService.posts.next(this.posts);
           });
     //  RARE SITUATION THAT HAVE NEXT VARIABLE GREATER THEN POST ARRAY
     } else if (this.next > this.posts.length) {
@@ -71,14 +66,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   onPreviewsBtn() {
     this.previews -= 5;
     this.next -= 5;
-  }
-
-  // FORMATTING To Date INSTANCE
-  formattingDate(posts) {
-    posts.forEach(
-      post => {
-        post['created_utc'] = new Date(post['created_utc'] * 1000)
-      });
   }
 
 }

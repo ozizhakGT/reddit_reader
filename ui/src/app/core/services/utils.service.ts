@@ -7,6 +7,7 @@ import {Post} from '../interfaces/post.interface';
   providedIn: 'root'
 })
 export class UtilsService {
+  chartHasChanged = new Subject<Post[]>();
   posts = new Subject<Post[]>();
   hasPosts = new BehaviorSubject<boolean>(false);
   constructor(private Notification: MatSnackBar) { }
@@ -31,10 +32,14 @@ export class UtilsService {
     data.forEach( (post, i) => {
       let holder = {};
       propArray.forEach(prop => {
+        if (prop === 'created_utc') {
+          post[prop] = new Date(post[prop] * 1000)
+        }
         holder[prop] = post[prop];
       })
       posts[i] = holder;
     });
+    this.chartHasChanged.next(posts);
   }
 
 
