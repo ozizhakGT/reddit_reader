@@ -1,0 +1,7 @@
+<div class="wrapper">
+  <div *ngIf="!hasPosts" class="search__wrapper">
+    <h1>Search For General Sub Reddit..</h1>
+    <img src="../../assets/home.png" alt="reddit home pic">
+  </div>
+  <router-outlet *ngIf="hasPosts"></router-outlet>
+</div>

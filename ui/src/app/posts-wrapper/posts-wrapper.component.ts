@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UtilsService} from "../core/services/utils.service";
+import {UtilsService} from '../core/services/utils.service';
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-posts-wrapper',
@@ -7,15 +8,13 @@ import {UtilsService} from "../core/services/utils.service";
   styleUrls: ['./posts-wrapper.component.css']
 })
 export class PostsWrapperComponent implements OnInit {
-  posts: any[] = [];
-  constructor(private utilsService: UtilsService) { }
+  hasPosts = false;
+  constructor(private utilsService: UtilsService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.utilsService.posts
-      .subscribe(
-        posts => {
-          this.posts = posts;
-          console.log(this.posts)
-        });
+    this.utilsService.hasPosts.subscribe(hasPost => {
+      this.hasPosts = hasPost;
+    });
   }
 }

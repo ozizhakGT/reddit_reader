@@ -1,0 +1,29 @@
+.wrapper {
+  margin-top: 14rem;
+  animation: fadeIn .5s;
+}
+.search__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search__wrapper h1 {
+  font-size: 4rem;
+  margin-right: 3rem;
+}
+.search__wrapper img {
+  width: 5.5rem;
+  height: 6rem;
+  animation: redditAnimation 5s 1s infinite;
+}
+
+@keyframes redditAnimation {
+  0%   {transform: translateY(0)}
+  5% {transform: translateY(-30px)}
+  15% {transform: translateY(1px) scaleY(.9)}
+  20% {transform: translateY(-15px)}
+  30% {transform: translateY(1px) scaleY(.9)}
+  35% {transform: translateY(-3px)}
+  40% {transform: translateY(0)}
+  100% {transform: translateY(0)}
+}

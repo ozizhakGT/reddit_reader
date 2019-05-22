@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from 'rxjs';
+import {Post} from "../interfaces/post.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
-  posts = new Subject<any[]>();
-  constructor(private notification: MatSnackBar) { }
+  subReddit = new BehaviorSubject<boolean>(false);
+  posts = new Subject<Post[]>();
+  hasPosts = new BehaviorSubject<boolean>(false);
+  constructor(private Notification: MatSnackBar) { }
 
-  messageNotification(message, action, messagetype) {
-    this.notification.open(message, action, {
+  notification(message, action, messagetype) {
+    this.Notification.open(message, action, {
       duration: 3500,
       panelClass: ['notification', messagetype],
       verticalPosition: 'top',
       horizontalPosition: 'right'
     });
   }
+
+  /*
+  * SET POST BY:
+  * propArray INDEXES;
+  * */
   setPosts(data) {
     let posts = [];
-    const propArray = ['author', 'thumbnail', 'ups', 'created_utc', 'url', 'title'];
+    const propArray: string[] = ['author', 'thumbnail', 'ups', 'created_utc', 'url', 'title'];
     data.forEach( (post, i) => {
       let holder = {};
       propArray.forEach(prop => {
@@ -31,17 +39,9 @@ export class UtilsService {
     this.posts.next(posts);
   }
   formattingDate(posts) {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     posts.forEach(
       post => {
-        let date    = new Date(post['created_utc'] * 1000);
-        let year    = date.getFullYear();
-        let month   = months[date.getMonth()];
-        let day     = date.getDate();
-        let hours   = date.getHours();
-        let minutes = (date.getMinutes() < 9) ? '0' + date.getMinutes() : date.getMinutes();
-        post['created_utc'] = `${day}/${month}/${year} - ${hours}:${minutes}`;
-
+        post['created_utc'] = new Date(post['created_utc'] * 1000)
       });
   }
 }
