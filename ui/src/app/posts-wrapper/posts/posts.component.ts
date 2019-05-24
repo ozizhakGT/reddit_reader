@@ -31,7 +31,6 @@ export class PostsComponent implements OnInit, OnDestroy {
       // TAKE SUB REDDIT FROM SESSION STORAGE
       this.subReddit = sessionStorage.getItem('subReddit');
       this.posts = posts;
-      this.utilsService.setPosts(this.posts);
     });
   }
 

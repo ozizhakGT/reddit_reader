@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UtilsService} from '../../../core/services/utils.service';
 import {Subscription} from 'rxjs';
-import {Post} from "../../../core/interfaces/post.interface";
 
 @Component({
   selector: 'app-chart',
@@ -9,7 +8,6 @@ import {Post} from "../../../core/interfaces/post.interface";
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit, OnDestroy {
-  
   chartSubscription: Subscription;
   
   single: number[] = [];
@@ -30,7 +28,6 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.utilsService.chartHasChanged.subscribe(
       posts => {
-        debugger
         this.single = this.utilsService.setChart(posts);
         // SORT BY HOUR
         this.single.sort((a, b) => {

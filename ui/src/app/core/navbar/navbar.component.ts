@@ -48,6 +48,7 @@ export class NavbarComponent implements OnInit {
           response => {
             sessionStorage.setItem('subReddit', subReddit);
             const posts = response['data'].children.map(post => post.data);
+            this.utilsService.setPosts(posts);
             this.utilsService.posts.next(posts);
             this.utilsService.hasPosts.next(true);
             this.searchForm.reset();
